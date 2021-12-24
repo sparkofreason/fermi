@@ -1,3 +1,5 @@
 mission/
 weekly/
 *.fits
+*.npy
+*.npz
