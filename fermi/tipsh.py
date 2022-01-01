@@ -10,21 +10,17 @@ stats = importr("stats")
 skel = importr("skellam")
 
 def roll_sphere(arr, lat_roll, lon_roll):
-    rows, cols = arr.shape
-    #rolled = numpy.empty(arr.shape)
-    #for row in range(rows):
-    #    rolled[row,:] = sphere_row(numpy.roll(arr, lon_roll, 1), row - lat_roll)
     rolled = numpy.roll(arr, lon_roll, 1)
     rolled = numpy.roll(rolled, lat_roll, 0)
     return rolled
 
 def spherify(arr):
-    rows, cols = arr.shape
+    _, cols = arr.shape
     spharr = numpy.vstack((arr, numpy.flipud(numpy.roll(arr, cols // 2, 1))))
     return spharr
 
 def unspherify(spharr):
-    rows, cols = spharr.shape
+    rows, _ = spharr.shape
     return spharr[0:rows//2, :]
 
 def haar_vals(J, j, arr):
@@ -53,8 +49,7 @@ def haar_1(sums):
     d = numpy.subtract(d1, d2) / 2
     return (a, h, v, d)
 
-def haar(arr, jmin=0):
-    a = spherify(arr)
+def haar(a, jmin=0):
     rows, cols = a.shape
     J = int(math.ceil(math.log(max(rows, cols), 2)))
     hs = []
@@ -68,10 +63,11 @@ def haar(arr, jmin=0):
         ds.append(d)
     return a, hs, vs, ds
 
+def haar_sphere(arr, jmin=0):
+    a = spherify(arr)
+    return haar(a, jmin)
+
 def skellam_tail(k, mu1, mu2):
-    #print(k)
-    #print(mu1)
-    #print(mu2)
     p = numpy.ones(k.shape)
     diff_mu = numpy.subtract(mu1, mu2)
     sigma_mu = numpy.sqrt(numpy.add(mu1,mu2))
@@ -96,7 +92,6 @@ def skellam_tail(k, mu1, mu2):
     if (p[large_right].size > 0):
         print('large_right')
         p[large_right] = stats.pnorm(k[large_right], diff_mu[large_right], sigma_mu[large_right], lower_tail=False)
-    #print(p)
     return p
 
 def poisson_tail(x, mu):
@@ -108,8 +103,8 @@ def poisson_tail(x, mu):
     return p
 
 def haar_threshold(counts, model, alpha, jmin=0, fwer=None):
-    a_counts = spherify(counts)
-    a_model = spherify(model)
+    a_counts = numpy.copy(counts)
+    a_model = numpy.copy(model)
     rows, cols = a_counts.shape
     J = int(math.ceil(math.log(max(rows, cols), 2)))
     hs = []
@@ -119,12 +114,12 @@ def haar_threshold(counts, model, alpha, jmin=0, fwer=None):
         f = 2**(J - j - 1)
         print(J, j, f, "******************************")
         if (fwer == 'sidak'):
-            alpha_j = 1 - (1 - alpha)**(1/(2**(2*j))) #alpha/(2**(2*j)) 
+            alpha_j = 1 - (1 - alpha)**(1/(2**(2*j))) 
         elif (fwer == 'bonferroni'):
             alpha_j = alpha/2**(2*j)
         else:
             alpha_j = alpha
-        print(alpha_j)
+        print("alpha_j", alpha_j)
         print("sums")
         sums_counts = haar_sums_j(J, j, a_counts)
         a_counts, h_counts, v_counts, d_counts = haar_1(sums_counts)
@@ -155,9 +150,13 @@ def haar_threshold(counts, model, alpha, jmin=0, fwer=None):
     a_mask = ap < alpha_j/2
     ar = a_counts[a_mask]
     a_model[a_mask] = ar
-    #a_model = a_counts
     print("Approximation rejected:", ar.size)
     return a_model, hs, vs, ds
+
+def haar_threshold_sphere(counts, model, alpha, jmin=0, fwer=None):
+    a_counts = spherify(counts)
+    a_model = spherify(model)
+    return haar_threshold(a_counts, a_model, alpha, jmin, fwer)
 
 def inv_haar_j(J, j, a, h, v, d):
     N = 2**J
@@ -189,4 +188,7 @@ def inv_haar(a, hs, vs, ds):
     for i in range(nj-1, -1, -1):
         j = J - i - 1
         a = inv_haar_j(J, j, a, hs[i], vs[i], ds[i])
-    return unspherify(a)
+    return a
+
+def inv_haar_sphere(a, hs, vs, ds):
+    return unspherify(inv_haar(a, hs, vs, ds))

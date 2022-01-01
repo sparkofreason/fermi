@@ -2,8 +2,8 @@
 # General parameters.
 evfile,        f, a, "lat_source_zmax90_gt1gev_gti.fits", , , "Event data file name"
 scfile,        f, a, "spacecraft.fits", , , "Spacecraft data file name"
-outfile,       f, a, "lat_source_zmax90_gt1gev_ccube.fits", , , "Output file name"
-algorithm,     s, a, "CCUBE", CCUBE|CMAP|LC|PHA1|PHA2|HEALPIX, , "Type of output file"
+outfile,       f, a, "3C279_binned_cmap.fits", , , "Output file name"
+algorithm,     s, a, "CMAP", CCUBE|CMAP|LC|PHA1|PHA2|HEALPIX, , "Type of output file"
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -30,16 +30,16 @@ lcemax,        r, a, 0, 0., , "Upper bound of energy range in MeV"
 
 #-------------------------------------------------------------------------------
 # Spatial binning parameters.
-nxpix,         i, a, 3600, , , "Size of the X axis in pixels"
-nypix,         i, a, 1800, , , "Size of the Y axis in pixels"
-binsz,         r, a, 0.1, , , "Image scale (in degrees/pixel)"
-coordsys,      s, a, "GAL", CEL|GAL, ,"Coordinate system (CEL - celestial, GAL -galactic)"
-xref,          r, a, 0, , , "First coordinate of image center in degrees (RA or galactic l)"
-yref,          r, a, 0, , , "Second coordinate of image center in degrees (DEC or galactic b)"
+nxpix,         i, a, 150, , , "Size of the X axis in pixels"
+nypix,         i, a, 150, , , "Size of the Y axis in pixels"
+binsz,         r, a, 0.2, , , "Image scale (in degrees/pixel)"
+coordsys,      s, a, "CEL", CEL|GAL, ,"Coordinate system (CEL - celestial, GAL -galactic)"
+xref,          r, a, 193.98, , , "First coordinate of image center in degrees (RA or galactic l)"
+yref,          r, a, -5.82, , , "Second coordinate of image center in degrees (DEC or galactic b)"
 axisrot,       r, a, 0, , , "Rotation angle of image axis, in degrees"
 rafield,       s, h, "RA", , ,"First coordinate field to bin"
 decfield,      s, h, "DEC", , ,"Second coordinate field to bin"
-proj,          s, a, "CAR", , , "Projection method e.g. AIT|ARC|CAR|GLS|MER|NCP|SIN|STG|TAN:"
+proj,          s, a, "AIT", , , "Projection method e.g. AIT|ARC|CAR|GLS|MER|NCP|SIN|STG|TAN:"
 #-------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
