@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<source_library title="source library">
+  <source ROI_Center_Distance="84.10" name="4FGL J0534.5+2201s" type="PointSource">
+    <spectrum type="PowerLaw">
+      <parameter free="0" max="100" min="0" name="Prefactor" scale="3.167853472e-09" value="11.99065106"/>
+      <parameter free="0" max="5" min="0" name="Index" scale="-1" value="3.801891717"/>
+      <parameter free="0" max="1000" min="0.01" name="Scale" scale="1000" value="0.08170902798"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="83.6331"/>
+      <parameter free="0" max="360.0" min="-360.0" name="DEC" scale="1.0" value="22.0199"/>
+    </spatialModel>
+  </source>
+  <source ROI_Center_Distance="84.10" name="4FGL J0534.5+2200" type="PointSource">
+    <spectrum type="PLSuperExpCutoff2">
+      <parameter free="0" max="100" min="0" name="Prefactor" scale="5.464541849e-10" value="1.323796989"/>
+      <parameter free="0" max="3" min="0" name="Index1" scale="-1" value="1.883293383"/>
+      <parameter free="0" max="5490.821382" min="310.9277564" name="Scale" scale="1" value="661.5528327"/>
+      <parameter free="0" max="100" min="-1" name="Expfactor" scale="0.001" value="4.434653482"/>
+      <parameter free="0" max="2" min="0" name="Index2" scale="1" value="0.6666667"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="83.6367"/>
+      <parameter free="0" max="360.0" min="-360.0" name="DEC" scale="1.0" value="22.0149"/>
+    </spatialModel>
+  </source>
+</source_library>

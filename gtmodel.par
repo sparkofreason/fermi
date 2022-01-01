@@ -1,9 +1,9 @@
 #
 # $Header: /nfs/slac/g/glast/ground/cvs/Likelihood/pfiles/gtmodel.par,v 1.12 2014/10/01 15:32:35 jchiang Exp $
 #
-srcmaps,fr,a,"diffuse_source_maps.fits",,,"Source maps (or counts map) file"
-srcmdl,fr,a,"allsky_input_model.xml",,,"Source model file"
-outfile,f,a,"allsky_counts_model2.fits",,,"Output file"
+srcmaps,fr,a,"point_only_59999_.fits",,,"Source maps (or counts map) file"
+srcmdl,fr,a,"point_only_59999_.xml",,,"Source model file"
+outfile,f,a,"point_only_59999_model.fits",,,"Output file"
 
 irfs,s,a,"P8R3_SOURCE_V3",,,"Response functions"
 evtype,i,h,INDEF,,,"Event type selections"
